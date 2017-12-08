@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--这里的status 是log4j2加载自己所需的内容的日志级别,monitorInterval属性是每隔30s检测一次文件，如果存在修改则重现加载-->
+<Configuration status="warn" monitorInterval="30">
+    <Properties>
+        <!--设置文件输出的位置-->
+        <Property name="logPath">spring-boot</Property>
+    </Properties>
+    <!--附加器，-->
+    <Appenders>
+        <RollingFile name="RollingFile" fileName="logs/${logPath}/${logPath}.log" filePattern="logs/${logPath}/$${date:yyyy-MM}/${logPath}.%d{yyyy-MM-dd HH}.%i.log.gz">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <!--最大单个日志文件250M-->
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+            <!--最多文件个数100-->
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="logs" maxDepth="3">
+                    <IfFileName glob="*/${logPath}-*.log.gz">
+                        <IfLastModified age="30d">
+                            <IfAny>
+                                <IfAccumulatedFileSize exceeds="100 GB" />
+                                <IfAccumulatedFileCount exceeds="10" />
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%t] %-5p - %m (%F:%L) -%-4r%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!--添加新的日志记录器，debug级别，additivity去除日志重复输出-->
+        <AsyncLogger name="study.Log" level="debug" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </AsyncLogger>
+        <!--父节点，除新添加节点，其他节点error级别的日志输出-->
+        <AsyncRoot level="error">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </AsyncRoot>
+
+        <!--Root 是同步输出日志，AsynRoot 是异步输出日志，异步输出日志需要依赖com.lmax.disruptor 3.0以上的包-->
+    </Loggers>
+</Configuration>
