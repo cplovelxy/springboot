@@ -70,12 +70,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.feidee.money</groupId>
-      <artifactId>admin-auth-sdk</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
