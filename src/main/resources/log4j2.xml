@@ -3,7 +3,7 @@
 <Configuration status="warn" monitorInterval="30">
     <Properties>
         <!--设置文件输出的位置-->
-        <Property name="logPath">spring-boot</Property>
+        <Property name="logPath">springBoot</Property>
     </Properties>
     <!--附加器，-->
     <Appenders>
@@ -15,7 +15,7 @@
                 <SizeBasedTriggeringPolicy size="250 MB"/>
             </Policies>
             <!--最多文件个数100-->
-            <DefaultRolloverStrategy max="100">
+            <DefaultRolloverStrategy max="3">
                 <Delete basePath="logs" maxDepth="3">
                     <IfFileName glob="*/${logPath}-*.log.gz">
                         <IfLastModified age="30d">
@@ -34,15 +34,23 @@
     </Appenders>
     <Loggers>
         <!--添加新的日志记录器，debug级别，additivity去除日志重复输出-->
-        <AsyncLogger name="study.Log" level="debug" additivity="false">
-            <AppenderRef ref="RollingFile"/>
-        </AsyncLogger>
+        <AsyncLogger name="study.dao.IUserDao" level="TRACE" additivity="true"></AsyncLogger>
+        <!-- mybatis loggers -->
+        <AsyncLogger name="com.alibaba.druid.sql" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis.jdbc.SimpleDataSource" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis.jdbc.ScriptRunner" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+        <!-- sql loggers -->
+        <AsyncLogger name="java.sql.Connection" level="DEBUG"  additivity="true"/>
+        <AsyncLogger name="java.sql.Statement" level="DEBUG" additivity="true" />
+        <AsyncLogger name="java.sql.PreparedStatement" level="=DEBUG"  additivity="true"/>
+        <AsyncLogger name="java.sql.ResultSet" level="DEBUG"  additivity="true"/>
         <!--父节点，除新添加节点，其他节点error级别的日志输出-->
-        <AsyncRoot level="error">
+        <AsyncRoot level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
         </AsyncRoot>
-
         <!--Root 是同步输出日志，AsynRoot 是异步输出日志，异步输出日志需要依赖com.lmax.disruptor 3.0以上的包-->
     </Loggers>
 </Configuration>

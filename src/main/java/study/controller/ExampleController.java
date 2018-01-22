@@ -1,6 +1,8 @@
 package study.controller;
 
+import org.apache.ibatis.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import study.dao.IUserDao;
@@ -20,7 +22,6 @@ public class ExampleController {
     @Resource
     private IUserDao userDao;
 
-
     @RequestMapping(value = "/")
     public String  index(){
         return "forward:/static/home.html";
@@ -28,31 +29,19 @@ public class ExampleController {
 
     @RequestMapping(value = "/select")
     public String test(){
-        String sql = "select userName from user limit 1";
+        String sql = "select name from user limit 1";
+        LogFactory.useLog4JLogging();
         return JdbcTemplate.queryForObject(sql,new Object[]{},String.class);
     }
-
 
     @RequestMapping(value = "/annotion")
     public void testAnnotion(){
         service.test();
     }
 
-
-    @RequestMapping(value = "/mybatis")
-    public String mybatis(){
-        return userDao.getUserById();
-    }
-
-
     @RequestMapping(value = "/annotion_mybatis")
     public String annotionMybatis(){
         return userDao.select();
     }
 
-
-    @RequestMapping(value = "/insert")
-    public void insert(){
-        userDao.insert();
-    }
 }
