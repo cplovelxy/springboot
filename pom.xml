@@ -15,12 +15,14 @@
     <java.version>1.8</java.version>
     <jackson.version>2.9.1</jackson.version>
     <lmax.disruptor.version>3.3.6</lmax.disruptor.version>
+    <springboot.mybatis.version>1.3.1</springboot.mybatis.version>
+    <zookeeper.version>3.4.6</zookeeper.version>
+    <mysql-connector-java>5.1.38</mysql-connector-java>
+    <springboot.version>1.5.6.RELEASE</springboot.version>
+    <alibaba.druid.version>1.0.29</alibaba.druid.version>
   </properties>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.6.RELEASE</version>
-  </parent>
+
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -35,21 +37,22 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
-      <version>1.0.29</version>
+      <version>${alibaba.druid.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
-      <version>3.4.6</version>
+      <version>${zookeeper.version}</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql-connector-java}</version>
     </dependency>
     <dependency>
       <groupId>org.mybatis.spring.boot</groupId>
       <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>1.3.1</version>
+      <version>${springboot.mybatis.version}</version>
     </dependency>
     <dependency>
       <groupId>com.lmax</groupId>
@@ -63,10 +66,21 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>1.5.6.RELEASE</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${springboot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>

@@ -34,13 +34,11 @@
     </Appenders>
     <Loggers>
         <!--添加新的日志记录器，debug级别，additivity去除日志重复输出-->
-        <AsyncLogger name="study.dao.IUserDao" level="TRACE" additivity="true"></AsyncLogger>
+        <AsyncLogger name="study.dao.defaultDao.IUserDao" level="TRACE" additivity="true"></AsyncLogger>
         <!-- mybatis loggers -->
-        <AsyncLogger name="com.alibaba.druid.sql" level="DEBUG" />
-        <AsyncLogger name="org.apache.ibatis" level="DEBUG" />
-        <AsyncLogger name="org.apache.ibatis.jdbc.SimpleDataSource" level="DEBUG" />
-        <AsyncLogger name="org.apache.ibatis.jdbc.ScriptRunner" level="DEBUG" />
-        <AsyncLogger name="org.apache.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis.logging.LogFactory" level="DEBUG" additivity="true"/>
+        <!--<AsyncLogger name="org.apache.ibatis.jdbc.ScriptRunner" level="DEBUG" />
+        <AsyncLogger name="org.apache.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />-->
         <!-- sql loggers -->
         <AsyncLogger name="java.sql.Connection" level="DEBUG"  additivity="true"/>
         <AsyncLogger name="java.sql.Statement" level="DEBUG" additivity="true" />

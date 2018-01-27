@@ -11,15 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author Administrator
  * @date 2017/9/29
  */
 @Configuration
-public class DruidConfiguration {
+public class DruidManger {
 
     @Bean
-    public ServletRegistrationBean druidServlet(){
+    public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
         servletRegistrationBean.setServlet(new StatViewServlet());
         servletRegistrationBean.addUrlMappings("/druid/*");
@@ -35,7 +34,7 @@ public class DruidConfiguration {
 
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean(){
+    public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
 
         filterRegistrationBean.setFilter(new WebStatFilter());
